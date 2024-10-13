@@ -1,7 +1,7 @@
 "use client";
 import SearchNav from "@/components/SearchResult/SearchNav";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { searchProduct } from "@/api/product";
 import React from "react";
 import Card from "@/components/Home/Card";
@@ -29,24 +29,26 @@ function SearchPage() {
 
   return (
     <>
-      <SearchNav query={query || ""} />
+      <Suspense fallback={<div>Loading...</div>}>
+        <SearchNav query={query || ""} />
 
-      <div className="p-5 gap-5 flex flex-wrap">
-        {searchResults &&
-          searchResults?.map((result: any) => (
-            <Card
-              key={result.id}
-              title={result.title}
-              date={result.createdAt}
-              state={result.state}
-              city={result.city}
-              price={result.price}
-              img={result.images[0].url}
-              editable={false}
-              id={result._id}
-            />
-          ))}
-      </div>
+        <div className="p-5 gap-5 flex flex-wrap">
+          {searchResults &&
+            searchResults?.map((result: any) => (
+              <Card
+                key={result.id}
+                title={result.title}
+                date={result.createdAt}
+                state={result.state}
+                city={result.city}
+                price={result.price}
+                img={result.images[0].url}
+                editable={false}
+                id={result._id}
+              />
+            ))}
+        </div>
+      </Suspense>
     </>
   );
 }
