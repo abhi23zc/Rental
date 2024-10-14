@@ -7,6 +7,7 @@ import { getMyAds } from "@/api/product";
 import Card from "@/components/Home/Card";
 import toast from "react-hot-toast";
 import AuthSession from "../(auth)/AuthSession";
+import { SkeletonCard } from "@/components/Skeleton";
 
 function page() {
   const [data, setdata] = useState([]);
@@ -19,7 +20,7 @@ function page() {
   }, []);
   return (
     <div>
-      <AuthSession/>
+      
       <div className="flex space-x-4 mt-5 w-fit pb-4  ml-5 border-b border-gray-200">
         <h1 className="text-sm">ADS</h1>
         <h1 className="text-sm">FAVOURITES</h1>
@@ -49,7 +50,15 @@ function page() {
           ) : (
             <NoItem />
           )
-        ) : null}
+        ) : (
+          <>
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+          </>
+        )}
       </div>
     </div>
   );

@@ -1,4 +1,3 @@
-// Get the token and base URL once
 const token =
   typeof window !== "undefined" ? localStorage.getItem("token") : null;
 const url = process.env.HOST || "http://localhost/api/v1";
@@ -42,7 +41,6 @@ const prepareFormData = (formDataObject: any) => {
   [
     "title",
     "description",
-    "price",
     "city",
     "state",
     "pincode",
@@ -64,6 +62,7 @@ const prepareFormData = (formDataObject: any) => {
       formData.append("images", image);
     });
   }
+  console.log(formData.get("price"))
   return formData;
 };
 
@@ -102,6 +101,7 @@ export const createRequest = async (productId: string, ownerId: string) => {
     productId,
     ownerId,
   });
+  console.log(token);
   return fetchApi(`/product/request`, "POST", formData, true);
 };
 
@@ -119,4 +119,13 @@ export const approveRequest = async (userId: string, productId: string) => {
     userId,
   });
   return fetchApi("/product/request/approve", "PUT", formData, true);
+};
+
+export const getNotification = async () => {
+  try {
+    const notification = await fetchApi("/notification", "GET");
+    return notification;
+  } catch (e) {
+    return null;
+  }
 };

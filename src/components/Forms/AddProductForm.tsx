@@ -64,7 +64,7 @@ function AddProductForm() {
 
     dataToSubmit.append("title", formData.title);
     dataToSubmit.append("description", formData.description);
-    dataToSubmit.append("price", formData.price);
+    dataToSubmit.append("price", formData.price.toString());
     dataToSubmit.append("city", formData.city);
     dataToSubmit.append("state", formData.state);
     dataToSubmit.append("pincode", formData.pincode);
@@ -78,8 +78,9 @@ function AddProductForm() {
       dataToSubmit.append(`images[${index}]`, file);
     });
     try {
-      await addProduct(formData);
-      toast.success("Product Succesfully added");
+      const res = await addProduct(formData);
+      if (res) toast.success("Product Succesfully added");
+      else toast.error("Error while adding Product");
     } catch (e) {
       toast.error("Error while adding Product");
     }

@@ -1,7 +1,7 @@
 "use client";
 import { EllipsisVertical, HeartIcon, User } from "lucide-react";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,7 +17,7 @@ import { useRouter } from "next/navigation";
 
 function Card({
   id,
-  owner, 
+  owner,
   img,
   title,
   date,
@@ -29,14 +29,15 @@ function Card({
   id: string;
   img: string;
   title: string;
-  date: string;
+  date: any;
   state: string;
   city: string;
   price?: string;
   editable?: boolean;
-  owner?:string
+  owner?: string;
 }) {
   const router = useRouter();
+  const [newdate, setdate] = useState(new Date(date));
   async function delProduct(id: string) {
     try {
       await deleteProduct(id);
@@ -92,7 +93,7 @@ function Card({
 
                 <DropdownMenuItem
                   onClick={() => {
-                    router.push("/myads/edit?id=" + id);
+                    router.push("/myads/edit/" + id);
                   }}
                 >
                   Edit
@@ -112,14 +113,16 @@ function Card({
 
         <div className="p-4">
           <h1 className="text-lg font-semibold text-gray-800 mb-2">
-            {price || "₹ 25,99,000"}
+            {"₹ " + price || "₹ 25,99,000"}
           </h1>
           <h1 className="text-base text-gray-700 font-medium mb-4">{title}</h1>
           <div className="flex justify-between mb-4">
             <p className="text-sm text-gray-600">
               {city}, {state}
             </p>
-            <p className="text-sm text-gray-600">{date}</p>
+            <p className="text-sm text-gray-600">
+              {newdate.toLocaleDateString()}
+            </p>
           </div>
         </div>
       </div>

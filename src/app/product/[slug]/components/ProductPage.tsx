@@ -121,6 +121,7 @@ function ProductPage({ element }: any) {
                 console.log(element._id, element.owner)
       
                 const data = await createRequest(element._id, element.owner);
+                console.log(data)
                 if(data){
                   toast.success("Offer Sent Succesfully");
                 }else{

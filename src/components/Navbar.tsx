@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  BellIcon,
   LogInIcon,
   SearchIcon,
   Shapes,
@@ -16,20 +17,39 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+import { AppContext } from "@/contextApi/AppContext";
+import { Session } from "@/hooks/Session";
+import React, { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-
-import CheckSession from "@/app/(auth)/CheckSession";
 import Link from "next/link";
+import NotificationsCard from "./Notifications";
 
 function Navbar() {
   const router = useRouter();
+
+  const { session, setsession } = useContext<any>(AppContext);
+  const [notification, setnotification] = useState<boolean>(false);
+
+  const check = async () => {
+    const userData = await Session();
+
+    return userData;
+  };
+
+  useEffect(() => {
+    check().then((userData) => {
+      if (userData != null) {
+        setsession(userData);
+      }
+    });
+  }, []);
 
   return (
     <div>
       <div className="flex lg:justify-between md:lg:justify-between p-10 flex-col lg:flex-row md:flex-row space-y-5 items-center">
         <div className="left flex lg:space-x-9 md:space-x-9 font-bold lg:flex-row md:flex-row flex-col space-y-5 lg:space-y-0 md:space-y-0 items-center">
           <Shapes fill="black" />
-          <ul className="flex md:space-x-9 lg:space-x-9 space-x-5 text-sm  ">
+          <ul className="flex md:space-x-9 lg:space-x-9 space-x-5 text-sm relative ">
             <Link href={"/"} className="tracking-wider cursor-pointer">
               HOME
             </Link>
@@ -48,8 +68,25 @@ function Navbar() {
           </ul>
         </div>
 
-        <div className="right flex  space-x-8 ">
+        <div className="right flex  space-x-8 relative">
           <SearchIcon />
+          <div className="relative cursor-pointer ">
+            <BellIcon
+              onClick={() => {
+                setnotification((prev) => !prev);
+              }}
+            />
+
+            {notification ? (
+              <div className="absolute top-0 right-0 z-10">
+                <NotificationsCard
+                  notification={notification}
+                  setnotification={setnotification}
+                />
+              </div>
+            ) : null}
+          </div>
+
           <ShoppingCart className="fill-black" />
 
           <DropdownMenu>
@@ -69,16 +106,30 @@ function Navbar() {
               <Link href={"/myads"}>
                 <DropdownMenuItem>My Ads</DropdownMenuItem>
               </Link>
-              <DropdownMenuItem
-                onClick={() => {
-                  localStorage.setItem("token", "");
-                  router.push("/login");
-                  document.cookie =
-                    "connect.sid=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;";
-                }}
-              >
-                LogOut
-              </DropdownMenuItem>
+
+              {session ? (
+                <DropdownMenuItem
+                  onClick={() => {
+                    localStorage.setItem("token", "");
+                    router.push("/login");
+                    document.cookie =
+                      "connect.sid=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;";
+                  }}
+                >
+                  LogOut
+                </DropdownMenuItem>
+              ) : (
+                <DropdownMenuItem
+                  onClick={() => {
+                    localStorage.setItem("token", "");
+                    router.push("/login");
+                    document.cookie =
+                      "connect.sid=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;";
+                  }}
+                >
+                  LogIn
+                </DropdownMenuItem>
+              )}
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
