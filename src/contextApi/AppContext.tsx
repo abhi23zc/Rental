@@ -9,8 +9,11 @@ interface Props {
 
 export const AppProvider: React.FC<Props> = ({ children }) => {
   const [session, setsession] = useState<any>(null);
+  const [mainLoading, setmainLoading] = useState<boolean>(false);
   return (
-    <AppContext.Provider value={{ session, setsession }}>
+    <AppContext.Provider
+      value={{ session, setsession, mainLoading, setmainLoading }}
+    >
       {children}
     </AppContext.Provider>
   );

@@ -1,13 +1,13 @@
-"use client"; 
+"use client";
 import SearchNav from "@/components/SearchResult/SearchNav";
-import { useParams } from "next/navigation"; 
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { searchProduct } from "@/api/product";
 import React from "react";
 import Card from "@/components/Home/Card";
 
 function SearchPage() {
-  const { query }: { query: string } = useParams(); 
+  const { query }: { query: string } = useParams();
   const [searchResults, setSearchResults] = useState<any>(null);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ function SearchPage() {
 
   return (
     <>
-      <SearchNav query={query || ""} />
+      <SearchNav query={query} first="" second="" />
 
       <div className="p-5 gap-5 flex flex-wrap">
         {searchResults &&

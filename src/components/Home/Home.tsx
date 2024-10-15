@@ -3,7 +3,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
+import { Loader2, Search } from "lucide-react";
 import Card from "./Card";
 import { getProducts } from "@/api/product";
 import toast from "react-hot-toast";
@@ -15,21 +15,46 @@ function Home() {
   const [data, setData] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState<boolean>(false);
+  const [loading2, setLoading2] = useState<boolean>(false);
   const [isMounted, setIsMounted] = useState<boolean>(false);
   const router = useRouter();
+
+  function handleLocationClick() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => success(position),
+        (e) => {
+          console.log(e);
+          handleLocationClick();
+        }
+      );
+    } else {
+      console.log("Geolocation not supported");
+    }
+  }
+  const [latitude, setlatitude] = useState<string>("");
+  const [longitude, setlongitude] = useState<string>("");
+
+  async function success(position: any) {
+    const latitude = position.coords.latitude;
+    const longitude = position.coords.longitude;
+    setlatitude(latitude);
+    setlongitude(longitude);
+    const result = await getProducts(latitude, longitude);
+    setData(result?.data);
+    setLoading(false);
+  }
 
   useEffect(() => {
     setIsMounted(true);
     async function fetchData() {
       try {
         setLoading(true);
-        const result = await getProducts();
-        setData(result?.data);
-        setLoading(false);
+        handleLocationClick();
       } catch (e) {
         console.error("Error while fetching products", e);
-        setLoading(false);
       }
+      setLoading(false);
     }
 
     fetchData();
@@ -42,11 +67,13 @@ function Home() {
 
   const handleSubmit = async () => {
     try {
+      setLoading2(true)
       router.push(`/search/` + searchQuery);
     } catch (e) {
       console.error("Error while searching products", e);
       toast.error("Error while searching products");
     }
+    setLoading2(false)
   };
 
   if (!isMounted) {
@@ -87,10 +114,13 @@ function Home() {
                 e.preventDefault();
                 handleSubmit();
               }}
-              type="submit"
-              className="md:mt-0 mt-5 ml-5 font-bold text-md tracking-wide"
+              className="ml-3 w-full bg-gray-700 hover:bg-black text-white font-semibold py-2 rounded-lg shadow-lg transition duration-300"
+              disabled={loading2}
             >
-              Search
+              {loading2 ? (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              ) : null}
+              {loading2 ? "Please wait " : "Search "}
             </Button>
           </div>
         </div>

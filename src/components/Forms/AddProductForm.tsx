@@ -64,7 +64,7 @@ function AddProductForm() {
 
     dataToSubmit.append("title", formData.title);
     dataToSubmit.append("description", formData.description);
-    dataToSubmit.append("price", formData.price.toString());
+    dataToSubmit.append("price", formData.price);
     dataToSubmit.append("city", formData.city);
     dataToSubmit.append("state", formData.state);
     dataToSubmit.append("pincode", formData.pincode);

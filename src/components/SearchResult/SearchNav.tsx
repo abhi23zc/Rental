@@ -2,10 +2,10 @@
 
 import BreadCrumb from "./BreadCrumb";
 
-function SearchNav({ query }: { query: string }) {
+function SearchNav({ query, first, second }: { query: string, first:string, second:string }) {
   return (
     <>
-      <BreadCrumb query={query} />
+      <BreadCrumb query={query} first={first} second={second}/>
     </>
   );
 }

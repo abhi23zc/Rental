@@ -23,12 +23,14 @@ import React, { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import NotificationsCard from "./Notifications";
+import Loading from "./Loading";
 
 function Navbar() {
   const router = useRouter();
-
+ 
   const { session, setsession } = useContext<any>(AppContext);
   const [notification, setnotification] = useState<boolean>(false);
+ 
 
   const check = async () => {
     const userData = await Session();
@@ -46,6 +48,8 @@ function Navbar() {
 
   return (
     <div>
+    
+     
       <div className="flex lg:justify-between md:lg:justify-between p-10 flex-col lg:flex-row md:flex-row space-y-5 items-center">
         <div className="left flex lg:space-x-9 md:space-x-9 font-bold lg:flex-row md:flex-row flex-col space-y-5 lg:space-y-0 md:space-y-0 items-center">
           <Shapes fill="black" />
@@ -56,7 +60,11 @@ function Navbar() {
             <Link href={"/"} className="tracking-wider cursor-pointer">
               RENTALS
             </Link>
-            <Link href={"/myads"} className="tracking-wider cursor-pointer">
+            <Link
+              href={"/myads"}
+             
+              className="tracking-wider cursor-pointer"
+            >
               POST
             </Link>
             <Link

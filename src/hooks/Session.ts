@@ -1,6 +1,6 @@
 export const Session = async (): Promise<any> => {
   try {
-    const url = process.env.HOST || "http://localhost/api/v1";
+    const url = process.env.HOST || "https://rental-backend-mh2c.onrender.com/api/v1";
     const response = await fetch(`${url}/auth/profile`, {
       method: "GET",
       credentials: "include",

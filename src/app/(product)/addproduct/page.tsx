@@ -1,7 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
 import AddProductForm from "../../../components/Forms/AddProductForm";
-
 
 function page() {
   return (

@@ -1,13 +1,13 @@
 "use client";
 import React, { useState } from "react";
-import { SubmitButton } from "@/components/common/SubmitBtn";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { register } from "@/api/auth";
 import { Button } from "./ui/button";
-import { Mail } from "lucide-react";
+import { Loader2, Mail } from "lucide-react";
 import Image from "next/image";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 function Register() {
   const [formData, setformData] = useState({
@@ -18,6 +18,8 @@ function Register() {
     password: "",
     c_password: "",
   });
+  const [loading, setloading] = useState(false);
+  const router = useRouter();
 
   const signInWithGoogle = () => {
     window.location.href = "http://localhost/auth/google";
@@ -104,14 +106,31 @@ function Register() {
           />
         </div>
 
-        <div
-          className="mt-4"
-          onClick={(e) => {
-            e.preventDefault();
-            register(formData);
-          }}
-        >
-          <SubmitButton />
+        <div className="mt-4">
+          <Button
+            onClick={(e) => {
+              setloading(true);
+              e.preventDefault();
+              register(formData)
+                .then((data) => {
+                  if (data.success == true) {
+                    toast.success("Account created Succesfully");
+                    router.push("/login");
+                  } else {
+                    toast.error("Error while creating account");
+                  }
+                })
+                .catch((e) => {
+                  toast.error("Error while creating account");
+                });
+              setloading(false);
+            }}
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg shadow-lg transition duration-300"
+            disabled={loading}
+          >
+            {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+            {loading ? "Please wait " : "Submit"}
+          </Button>
 
           <Button className="w-full mt-2" onClick={() => signInWithGoogle()}>
             <Image

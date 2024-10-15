@@ -1,6 +1,7 @@
 const token =
   typeof window !== "undefined" ? localStorage.getItem("token") : null;
-const url = process.env.HOST || "http://localhost/api/v1";
+const url = process.env.HOST || " https://rental-backend-mh2c.onrender.com/api/v1";
+console.log("Myurl is" , url)
 
 const fetchApi = async (
   endpoint: string,
@@ -62,17 +63,22 @@ const prepareFormData = (formDataObject: any) => {
       formData.append("images", image);
     });
   }
-  console.log(formData.get("price"))
+  console.log(formData.get("price"));
   return formData;
 };
 
 export const addProduct = async (formDataObject: any) => {
+  console.log("token", token);
   const formData: any = prepareFormData(formDataObject);
   return fetchApi("/product/", "POST", formData, true);
 };
 
-export const getProducts = async () => {
-  return fetchApi("/product/", "GET");
+export const getProducts = async (latitude: string, longitude: string) => {
+
+  return fetchApi(
+    `/product?latitude=${latitude}&longitude=${longitude}`,
+    "GET"
+  );
 };
 
 export const getMyAds = async () => {

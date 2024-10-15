@@ -7,6 +7,8 @@ import {
   Share2Icon,
   User2Icon,
   MessageCircleIcon,
+  CircleCheckBig,
+  HomeIcon,
 } from "lucide-react";
 import { createRequest } from "@/api/product";
 import toast from "react-hot-toast";
@@ -139,9 +141,15 @@ function ProductPage({ element }: any) {
             Make Offer
           </button>
           <div className="flex items-center space-x-3">
-            <User2Icon size={28} className="text-gray-700" />
+            <CircleCheckBig size={28} className="text-gray-700" />
             <p className="text-lg font-medium text-gray-700">
-              Eicher Motors Ltd
+              {element?.category}
+            </p>
+          </div>
+          <div className="flex items-center space-x-3">
+            <HomeIcon size={20} className="text-gray-700" />
+            <p className="text-md font-medium text-gray-700">
+              {element?.city}
             </p>
           </div>
           <button className="w-full bg-black text-white font-bold py-3 rounded-lg hover:bg-gray-800 transition">

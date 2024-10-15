@@ -8,8 +8,9 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { useRouter } from "next/navigation";
-function BreadCrumb({query}: {query: string}) {
+function BreadCrumb({query, first, second}: {query: string, first:string, second:string}) {
   const router = useRouter();
+
   return (
     <div>
       <Breadcrumb className="bg-white p-4 rounded-lg shadow">
@@ -32,12 +33,12 @@ function BreadCrumb({query}: {query: string}) {
               }}
               className="text-gray-600 cursor-pointer hover:text-gray-800"
             >
-              Search
+              {first || "Search"}
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator className="mx-2" />
           <BreadcrumbItem className="flex items-center">
-            <BreadcrumbPage className="text-gray-800 font-semibold">Searching Results for {query}</BreadcrumbPage>
+            <BreadcrumbPage className="text-gray-800 font-semibold">{second || "Searching Results for " + query}</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>

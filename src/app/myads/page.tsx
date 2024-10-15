@@ -1,16 +1,18 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import NoItem from "./NoItem";
 import { getMyAds } from "@/api/product";
 import Card from "@/components/Home/Card";
 import toast from "react-hot-toast";
 import AuthSession from "../(auth)/AuthSession";
 import { SkeletonCard } from "@/components/Skeleton";
+import { AppContext } from "@/contextApi/AppContext";
 
 function page() {
   const [data, setdata] = useState([]);
+
   useEffect(() => {
     try {
       getMyAds().then((res) => setdata(res?.data));
@@ -20,7 +22,6 @@ function page() {
   }, []);
   return (
     <div>
-      
       <div className="flex space-x-4 mt-5 w-fit pb-4  ml-5 border-b border-gray-200">
         <h1 className="text-sm">ADS</h1>
         <h1 className="text-sm">FAVOURITES</h1>

@@ -8,8 +8,10 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import CheckSession from "../CheckSession";
+import { Loader2 } from "lucide-react";
 
 function LoginPage() {
+  const [loading, setloading] = useState(false)
   const router = useRouter();
 
   const [formData, setFormData] = useState({
@@ -21,6 +23,7 @@ function LoginPage() {
   async function handleSubmit(e: any) {
     e.preventDefault();
     try {
+      setloading(true)
       const data = await login(formData);
       if (!data) {
         toast.error("Invalid Credentials");
@@ -31,12 +34,13 @@ function LoginPage() {
     } catch (error) {
       console.error("Login error:", error);
       toast.error("Login failed");
+
     }
+    setloading(false)
   }
 
   return (
     <>
-      
       <CheckSession />
       <div className="h-screen flex justify-center items-center">
         <div className="w-[550px] bg-white rounded-md py-5 px-10 shadow-md">
@@ -92,13 +96,17 @@ function LoginPage() {
 
             <div className="mt-4">
               <Button
-                type="submit"
                 onClick={(e) => {
+                  e.preventDefault();
                   handleSubmit(e);
                 }}
-                className="w-full"
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg shadow-lg transition duration-300"
+                disabled={loading}
               >
-                Submit
+                {loading ? (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                ) : null}
+                {loading ? "Please wait " : "Submit"}
               </Button>
             </div>
           </form>
