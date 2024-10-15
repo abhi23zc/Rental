@@ -7,6 +7,8 @@ export interface FormData {
   c_password: string;
 }
 
+// Login function 
+
 export const login = async (formdata:any): Promise<any> => {
   try {
     const url = process.env.HOST || "https://rental-backend-mh2c.onrender.com/api/v1";
