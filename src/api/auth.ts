@@ -11,7 +11,7 @@ export interface FormData {
 
 export const login = async (formdata:any): Promise<any> => {
   try {
-    const url = process.env.HOST || "https://rental-backend-mh2c.onrender.com/api/v1";
+    const url =  "https://rental-backend-mh2c.onrender.com/api/v1";
     const response = await fetch(`${url}/auth/login`, {
       method: "POST",
       credentials: "include",
