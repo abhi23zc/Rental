@@ -98,7 +98,7 @@ function ProductPage({ element }: any) {
         <div className="md:w-2/3 space-y-6">
           <div className="p-6 bg-white shadow-md rounded-lg">
             <h1 className="text-4xl font-bold text-gray-800">
-              {element?.title || "Royal Enfield Meteor 320 (2023)"}
+              {element?.title || "Product Title"}
             </h1>
           </div>
 

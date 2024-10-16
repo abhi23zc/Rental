@@ -52,7 +52,7 @@ function Card({
       <div className="w-64   relative rounded-md shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out bg-white">
         <div
           onClick={() => {
-            router.push(`/product/${id}`);
+            window.location.href = `/product/${id}`;
             // console.log("MYID", id)
           }}
           className="flex space-x-5 items-center justify-center p-2"
