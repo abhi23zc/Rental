@@ -36,6 +36,7 @@ function Trending() {
         {data.length >0  ? data?.map((elem: any) => {
           return (
             <TrendingCard
+            id ={elem._id}
               img={elem?.images[0].url}
               name={elem?.title}
               liked={false}

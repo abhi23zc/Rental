@@ -6,15 +6,20 @@ function TrendingCard({
   img,
   name,
   price,
+  id,
   liked,
 }: {
+  id:string,
   img: string;
   name: string;
   price: number;
   liked: boolean;
 }) {
   return (
-    <div className="w-56 bg-gray-100 rounded-lg shadow-md m-5 overflow-hidden">
+    <div onClick={() => {
+      window.location.href = `/product/${id}`;
+      // console.log("MYID", id)
+    }} className="w-56 bg-gray-100 rounded-lg shadow-md m-5 overflow-hidden">
       <div className="relative w-full h-48">
         <Image
           src={img}

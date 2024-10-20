@@ -49,12 +49,12 @@ function Card({
   }
   return (
     <>
-      <div className="w-64   relative rounded-md shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out bg-white">
-        <div
-          onClick={() => {
+      <div onClick={() => {
             window.location.href = `/product/${id}`;
             // console.log("MYID", id)
-          }}
+          }} className="w-64   relative rounded-md shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out bg-white">
+        <div
+          
           className="flex space-x-5 items-center justify-center p-2"
         >
           <Image
