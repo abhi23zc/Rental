@@ -27,8 +27,8 @@ function page() {
         <h1 className="text-sm">FAVOURITES</h1>
       </div>
       <div
-        className={`flex flex-wrap gap-3 ml-5 mt-7 ${
-          data ? (data.length > 0 ? "" : "justify-center") : null
+        className={`flex flex-wrap gap-3 ml-5 mt-7 w-full   ${
+          data ? (data.length > 0 ? "justify-start" : "justify-center") : null
         }`}
       >
         {data ? (
@@ -52,13 +52,7 @@ function page() {
             <NoItem />
           )
         ) : (
-          <>
-            <SkeletonCard />
-            <SkeletonCard />
-            <SkeletonCard />
-            <SkeletonCard />
-            <SkeletonCard />
-          </>
+          <NoItem />
         )}
       </div>
     </div>

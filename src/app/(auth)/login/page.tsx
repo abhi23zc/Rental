@@ -29,7 +29,8 @@ function LoginPage() {
         toast.error("Invalid Credentials");
       } else {
         toast.success("Succesfully LoggedIn");
-        router.push("/");
+        // router.push("/");
+        window.location.href = "/"
       }
     } catch (error) {
       console.error("Login error:", error);

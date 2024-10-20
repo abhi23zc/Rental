@@ -1,9 +1,23 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight, HandCoins, PawPrint } from "lucide-react";
 import TrendingCard from "./TrendingCard";
-
+import { getProducts } from "@/api/product";
+import { SkeletonCard } from "../Skeleton";
 
 function Trending() {
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    async function fetchData() {
+      const result = await getProducts("null", "null");
+      const mydata = result?.data;
+      mydata.sort((a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+      setData(mydata.slice(0, 6));
+
+    }
+    fetchData();
+  }, []);
+
   return (
     <div className="w-fit mt-10  rounded-lg ">
       <div className="flex  bg-gray-200 p-1 rounded-md justify-between items-center mb-8">
@@ -19,42 +33,23 @@ function Trending() {
       </div>
 
       <div className="flex flex-wrap justify-center gap-4">
-        <TrendingCard
-          img={"/Trending/download.jpeg"}
-          name={"Luxury Sofa Set"}
-          liked={false}
-          price={599}
-        />
-        <TrendingCard
-          img={"/Trending/car.jpeg"}
-          name={"Drive in style"}
-          liked={false}
-          price={699}
-        />
-        <TrendingCard
-          img={"/Trending/camera.jpeg"}
-          name={"Professional Camera Kit"}
-          liked={false}
-          price={899}
-        />
-        <TrendingCard
-          img={"/Trending/tent.jpeg"}
-          name={"Camping Tent"}
-          liked={false}
-          price={499}
-        />
-        <TrendingCard
-          img={"/Trending/camera-p.jpeg"}
-          name={"Capture your memories"}
-          liked={false}
-          price={799}
-        />
-        <TrendingCard
-          img={"/Trending/library.jpeg"}
-          name={"Get ahead with "}
-          liked={false}
-          price={399}
-        />
+        {data.length >0  ? data?.map((elem: any) => {
+          return (
+            <TrendingCard
+              img={elem?.images[0].url}
+              name={elem?.title}
+              liked={false}
+              price={elem?.price}
+            />
+          );
+        }) : <>
+          <SkeletonCard/>
+          <SkeletonCard/>
+          <SkeletonCard/>
+          <SkeletonCard/>
+          <SkeletonCard/>
+          <SkeletonCard/>
+        </>}
       </div>
     </div>
   );

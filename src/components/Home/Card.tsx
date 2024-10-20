@@ -68,6 +68,9 @@ function Card({
         {!editable ? (
           <div className=" absolute top-5 right-3 rounded-full ">
             <HeartIcon
+            onClick={()=>{
+              toast.error("Functionality not available")
+            }}
               className="bg-white rounded-full p-1"
               width={28}
               height={28}

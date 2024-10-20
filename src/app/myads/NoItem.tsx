@@ -6,7 +6,7 @@ import React from "react";
 function NoItem() {
   return (
     <div>
-      <div className="flex flex-col justify-center items-center space-y-5">
+      <div className="flex flex-col justify-center items-center space-y-5 "  >
         <Image
           alt="No Ads"
           src={"/images/noad.webp"}

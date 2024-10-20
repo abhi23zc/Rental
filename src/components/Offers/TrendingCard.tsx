@@ -27,7 +27,7 @@ function TrendingCard({
       <div className="flex p-3 justify-between">
         <div>
           <p>{name}</p>
-          <p>$ {price}</p>
+          <p>₹ {price}</p>
         </div>
         <div>
           <HeartIcon fill={liked ? "black" : "none"} stroke={liked ? "none" : "currentColor"} />

@@ -1,6 +1,7 @@
 const token =
   typeof window !== "undefined" ? localStorage.getItem("token") : null;
 const url = process.env.HOST || "https://rental-backend-mh2c.onrender.com/api/v1";
+// const url = process.env.HOST || "http://localhost/api/v1";
 console.log("Myurl is" , url)
 
 const fetchApi = async (

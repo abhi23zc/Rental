@@ -77,7 +77,7 @@ function Navbar() {
         </div>
 
         <div className="right flex  space-x-8 relative">
-          <SearchIcon />
+          {/* <SearchIcon /> */}
           <div className="relative cursor-pointer ">
             <BellIcon
               onClick={() => {

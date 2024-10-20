@@ -23,9 +23,11 @@ function Home() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => success(position),
-        (e) => {
+        async (e) => {
+          const result = await getProducts("null", "null");
+          setData(result?.data);
           console.log(e);
-          handleLocationClick();
+          // handleLocationClick();
         }
       );
     } else {
