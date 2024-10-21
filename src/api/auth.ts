@@ -7,11 +7,12 @@ export interface FormData {
   c_password: string;
 }
 
+const url =  "https://rental-backend-mh2c.onrender.com/api/v1";
+// const url =  "http://localhost/api/v1";
 // Login function 
 
 export const login = async (formdata:any): Promise<any> => {
   try {
-    const url =  "https://rental-backend-mh2c.onrender.com/api/v1";
     const response = await fetch(`${url}/auth/login`, {
       method: "POST",
       credentials: "include",
@@ -37,7 +38,7 @@ export const login = async (formdata:any): Promise<any> => {
 
 export const register = async (formdata: FormData): Promise<any> => {
   try {
-    const url = process.env.HOST || "https://rental-backend-mh2c.onrender.com/api/v1";
+    
     const response = await fetch(`${url}/auth/signup`, {
       method: "POST",
       credentials: "include",
@@ -57,7 +58,6 @@ export const register = async (formdata: FormData): Promise<any> => {
 
 export const profile = async (): Promise<any> => {
   try {
-    const url = process.env.HOST || "https://rental-backend-mh2c.onrender.com/api/v1";
     const response = await fetch(`${url}/auth/profile`, {
       method: "GET",
       credentials: "include",

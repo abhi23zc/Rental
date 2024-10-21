@@ -95,19 +95,24 @@ function Navbar() {
             ) : null}
           </div>
 
-          <ShoppingCart className="fill-black" />
+          <ShoppingCart onClick={()=>{
+            router.push("/fav")
+          }} className="fill-black" />
 
           <DropdownMenu>
             <DropdownMenuTrigger>
               <User className="fill-black" />
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <Link href={"/account"}>
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              </Link>
+              
+                <DropdownMenuLabel>{session?.user?.username}</DropdownMenuLabel>
+              
 
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Profile</DropdownMenuItem>
+              <Link href="/account">
+                <DropdownMenuItem>My Account</DropdownMenuItem>
+              </Link>
+             
               <Link href="/addproduct">
                 <DropdownMenuItem>Sell</DropdownMenuItem>
               </Link>

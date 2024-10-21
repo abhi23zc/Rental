@@ -2,7 +2,7 @@ const token =
   typeof window !== "undefined" ? localStorage.getItem("token") : null;
 const url = process.env.HOST || "https://rental-backend-mh2c.onrender.com/api/v1";
 // const url = process.env.HOST || "http://localhost/api/v1";
-console.log("Myurl is" , url)
+console.log("Myurl is", url);
 
 const fetchApi = async (
   endpoint: string,
@@ -75,7 +75,6 @@ export const addProduct = async (formDataObject: any) => {
 };
 
 export const getProducts = async (latitude: string, longitude: string) => {
-
   return fetchApi(
     `/product?latitude=${latitude}&longitude=${longitude}`,
     "GET"
@@ -136,3 +135,11 @@ export const getNotification = async () => {
     return null;
   }
 };
+
+export const likeProduct = async (id: string) => {
+  return fetchApi(`/product/like/${id}`, "POST");
+};
+
+export const getLikedProducts = async () =>{
+  return fetchApi("/product/liked", "GET");
+}

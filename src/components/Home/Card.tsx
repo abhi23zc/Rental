@@ -1,7 +1,7 @@
 "use client";
 import { EllipsisVertical, HeartIcon, User } from "lucide-react";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,13 +11,16 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
-import { deleteProduct } from "@/api/product";
+import { deleteProduct, likeProduct } from "@/api/product";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { Session } from "@/hooks/Session";
 
 function Card({
+  userId,
   id,
   owner,
+  likedBy,
   img,
   title,
   date,
@@ -26,6 +29,7 @@ function Card({
   price,
   editable,
 }: {
+  userId: any;
   id: string;
   img: string;
   title: string;
@@ -35,9 +39,11 @@ function Card({
   price?: string;
   editable?: boolean;
   owner?: string;
+  likedBy?: any;
 }) {
   const router = useRouter();
   const [newdate, setdate] = useState(new Date(date));
+  const [isLiked, setisLiked] = useState(false);
   async function delProduct(id: string) {
     try {
       await deleteProduct(id);
@@ -47,9 +53,16 @@ function Card({
       toast.error("Error while deleting product");
     }
   }
+
+  useEffect(() => {
+    if (likedBy && likedBy.includes(userId)) {
+      setisLiked(true);
+    }
+  }, [likedBy]);
+
   return (
     <>
-      <div  className="w-64   relative rounded-md shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out bg-white">
+      <div className="w-64   relative rounded-md shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out bg-white">
         <div
           onClick={() => {
             window.location.href = `/product/${id}`;
@@ -68,9 +81,22 @@ function Card({
         {!editable ? (
           <div className=" absolute top-5 right-3 rounded-full ">
             <HeartIcon
-            onClick={()=>{
-              toast.error("Functionality not available")
-            }}
+              fill={isLiked ? "red" : "white"}
+              color={isLiked ? "red" : "black"}
+              onClick={async () => {
+                try {
+                  setisLiked(!isLiked);
+                  const data = await likeProduct(id);
+                  if (data?.status == true) {
+                    console.log("Added");
+                  } else {
+                    toast.error("Failed to add to Favorites");
+                    setisLiked(false);
+                  }
+                } catch (e) {
+                  toast.error("Failed to add to Favorites");
+                }
+              }}
               className="bg-white rounded-full p-1"
               width={28}
               height={28}

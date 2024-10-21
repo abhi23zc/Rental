@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { SkeletonCard } from "../Skeleton";
+import { Session } from "@/hooks/Session";
 
 function Home() {
   const [data, setData] = useState<any[]>([]);
@@ -46,11 +47,15 @@ function Home() {
     setData(result?.data);
     setLoading(false);
   }
+  const [user, setuser] = useState(null);
 
   useEffect(() => {
     setIsMounted(true);
     async function fetchData() {
       try {
+        await Session().then((data) => {
+          setuser(data?.user?.userId);
+        });
         setLoading(true);
         handleLocationClick();
       } catch (e) {
@@ -69,13 +74,13 @@ function Home() {
 
   const handleSubmit = async () => {
     try {
-      setLoading2(true)
+      setLoading2(true);
       router.push(`/search/` + searchQuery);
     } catch (e) {
       console.error("Error while searching products", e);
       toast.error("Error while searching products");
     }
-    setLoading2(false)
+    setLoading2(false);
   };
 
   if (!isMounted) {
@@ -154,6 +159,7 @@ function Home() {
         {!loading ? (
           data?.map((element) => (
             <Card
+              userId={user}
               title={element.title}
               city={element.city}
               state={element.state}
@@ -164,6 +170,7 @@ function Home() {
               key={element._id}
               owner={element.owner.toString()}
               editable={false}
+              likedBy={element.likedBy}
             />
           ))
         ) : (
