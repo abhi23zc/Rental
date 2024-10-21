@@ -12,7 +12,7 @@ import { AppContext } from "@/contextApi/AppContext";
 
 function page() {
   const [data, setdata] = useState([]);
-
+  const { session, setsession } = useContext<any>(AppContext);
   useEffect(() => {
     try {
       getMyAds().then((res) => setdata(res?.data));
@@ -36,6 +36,8 @@ function page() {
             data?.map((element: any) => {
               return (
                 <Card
+                  userId={session?.user?.userId}
+                  likedBy={element.likedBy}
                   img={element?.images[0].url}
                   title={element?.title}
                   date={element?.createdAt}

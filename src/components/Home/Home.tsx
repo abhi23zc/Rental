@@ -45,6 +45,7 @@ function Home() {
     setlongitude(longitude);
     const result = await getProducts(latitude, longitude);
     setData(result?.data);
+    console.log(result)
     setLoading(false);
   }
   const [user, setuser] = useState(null);
@@ -56,6 +57,7 @@ function Home() {
         await Session().then((data) => {
           setuser(data?.user?.userId);
         });
+
         setLoading(true);
         handleLocationClick();
       } catch (e) {
@@ -158,6 +160,7 @@ function Home() {
       >
         {!loading ? (
           data?.map((element) => (
+            
             <Card
               userId={user}
               title={element.title}

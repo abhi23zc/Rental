@@ -2,14 +2,18 @@
 import { getProducts } from "@/api/product";
 import Card from "@/components/Home/Card";
 import SearchNav from "@/components/SearchResult/SearchNav";
-import React, { useEffect, useState } from "react";
+import { AppContext } from "@/contextApi/AppContext";
+import React, { useContext, useEffect, useState } from "react";
 
 function page({ params }: any) {
   const [data, setData] = useState<any[]>([]);
+  const { session, setsession } = useContext<any>(AppContext);
   const query = params?.query;
   useEffect(() => {
+   
     async function fetchData() {
       try {
+        
         const result = await getProducts("", "");
         setData(result?.data);
       } catch (e) {
@@ -18,7 +22,7 @@ function page({ params }: any) {
     }
 
     fetchData();
-  }, []);
+  }, [session]);
 
   return (
     <div>
@@ -32,6 +36,8 @@ function page({ params }: any) {
           .map((element) => {
             return (
               <Card
+                userId={session?.user?.userId}
+                likedBy={element.likedBy}
                 title={element.title}
                 city={element.city}
                 state={element.state}

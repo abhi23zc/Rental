@@ -1,14 +1,16 @@
 "use client";
 import SearchNav from "@/components/SearchResult/SearchNav";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { searchProduct } from "@/api/product";
 import React from "react";
 import Card from "@/components/Home/Card";
+import { AppContext } from "@/contextApi/AppContext";
 
 function SearchPage() {
   const { query }: { query: string } = useParams();
   const [searchResults, setSearchResults] = useState<any>(null);
+  const { session, setsession } = useContext<any>(AppContext);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,6 +36,8 @@ function SearchPage() {
         {searchResults &&
           searchResults?.map((result: any) => (
             <Card
+              userId={session?.user?.userId}
+              likedBy={result.likedBy}
               key={result.id}
               title={result.title}
               date={result.createdAt}

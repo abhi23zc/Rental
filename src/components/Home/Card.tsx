@@ -87,6 +87,7 @@ function Card({
                 try {
                   setisLiked(!isLiked);
                   const data = await likeProduct(id);
+                  console.log(data)
                   if (data?.status == true) {
                     console.log("Added");
                   } else {
